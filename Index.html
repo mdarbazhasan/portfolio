@@ -1,0 +1,1722 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbaz's Portfolio</title>
+    
+    <link rel="icon" href="logo.svg" type="image/png">
+    <meta name="theme-color" content="#7EEBD6">
+    <meta name="msapplication-TileColor" content="#7EEBD6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+                /*
+                 Primary layout CSS for Index.html
+                 Breakpoints used in this stylesheet:
+                     - Tablet / small desktop: max-width: 1024px (in external responsive.css)
+                     - Mobile compact: max-width: 700px
+                     - Very small phones: max-width: 420px
+                 Keep desktop styles unchanged where possible; responsive overrides live in assets/css/responsive.css
+                */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Central color palette tuned to the UHD/confetti video background.
+           Adjust these variables if you change the video to keep the site in harmony. */
+        :root{
+            --bg-dark-1: #0f1724; /* deep navy */
+            --bg-dark-2: #253047; /* muted indigo */
+            --accent-1: #7EEBD6; /* teal */
+            --accent-2: #A9B7FF; /* soft periwinkle */
+            --accent-3: #F6CFE6; /* pastel pink */
+            --cta-start: #7eebd6;
+            --cta-end: #ffc2e6;
+            --nav-overlay: rgba(6,10,20,0.5);
+            --glass-bg: rgba(255,255,255,0.06);
+        }
+
+        /* Job title and pill icon mobile fixes */
+        @media (max-width:700px) {
+            /* Scale and allow wrapping for the typed job title */
+            .jobstyle { font-size: clamp(0.95rem, 3.5vw, 1.1rem); line-height: 1.18; }
+            .jobstyle .jobname, #job-typed { white-space: normal; word-break: break-word; display: inline; }
+        }
+
+        @media (max-width:420px) {
+            /* Hide SVG icons inside the small pills to save space but keep text accessible */
+            .download-resume svg, .contact-cta svg { display: none !important; }
+            /* Slightly reduce job title size on very small screens */
+            .jobstyle { font-size: 0.95rem; }
+        }
+
+        /* Keep hero control pills on one line on small screens; allow horizontal scroll if needed */
+        @media (max-width:700px) {
+            .hero-controls { flex-wrap: nowrap !important; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .hero-controls a { flex: 0 0 auto; }
+        }
+
+        @media (max-width:420px) {
+            .hero-controls { gap: 6px; }
+            /* ensure pills remain tappable and aligned */
+            .download-resume, .contact-cta { display: inline-flex; align-items: center; gap: 8px; }
+            /* hide icons inside pills on very small screens (icons still appear in hero-socials) */
+            .download-resume svg, .contact-cta svg { display: none !important; }
+        }
+
+        body {
+            /* Harmonized background â€” deep, slow-moving gradient to sit behind the colorful UHD video */
+            background: linear-gradient(120deg, var(--bg-dark-1) 0%, var(--bg-dark-2) 40%, #2b3450 100%);
+            background-size: 300% 300%;
+            /* slower, subtle shift to avoid clashing with the moving video */
+            animation: pageBgShift 28s ease-in-out infinite;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.6s ease;
+            /* prevent accidental horizontal scroll caused by wide visuals */
+            overflow-x: hidden;
+            /* remove unwanted top gap above the navbar */
+            padding-top: 0;
+            padding-bottom: 12px;
+        }
+
+        @keyframes pageBgShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+    nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 36px;
+            height: 66px;
+            /* glassy translucent bar so the confetti video shows through */
+            background: var(--nav-overlay);
+            color: #ffffff;
+            position: relative;
+            z-index: 1200; /* stay above the background video */
+            backdrop-filter: blur(8px) saturate(120%);
+            -webkit-backdrop-filter: blur(8px) saturate(120%);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 6px 20px rgba(2,6,23,0.45);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* hide mobile-only connect item by default (shown in the mobile media query) */
+        .connect-nav { display: none; }
+
+        /* Social icons shown in the header */
+        .socials {
+            display: inline-flex;
+            gap: 10px;
+            margin-left: 18px;
+            align-items: center;
+        }
+
+        /* Ensure the right wrapper aligns the nav and the connect icons */
+        .right {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .socials a {
+            color: white;
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.10);
+            text-decoration: none;
+            transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+            box-shadow: 0 6px 16px rgba(10,14,30,0.32);
+        }
+
+        .socials a:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.16);
+            box-shadow: 0 12px 30px rgba(78,166,255,0.12);
+        }
+
+        /* Ensure local icon images sit nicely inside the anchor buttons */
+        .socials img {
+            width: 18px;
+            height: 18px;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* hero-socials: small grouping used next to resume/contact buttons */
+        .hero-socials {
+            margin-left: 6px;
+            gap: 8px;
+        }
+
+        /* Nav items: improved hover with animated underline + subtle scale */
+        nav ul li {
+            list-style: none;
+            margin: 0 18px;
+            padding: 6px 8px;
+            /* slightly reduced padding to fit underline */
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: transform 220ms cubic-bezier(.2, .9, .2, 1), background 220ms ease;
+        }
+
+        /* Link reset and underline pseudo-element */
+        nav ul li a {
+            position: relative;
+            display: inline-block;
+            padding: 6px 4px;
+            text-decoration: none;
+            color: white;
+            transition: color 240ms ease, transform 220ms cubic-bezier(.2, .9, .2, 1);
+        }
+
+        /* animated underline that grows from center */
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -6px;
+            width: 0;
+            height: 3px;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #A9B7FF 0%, #F6CFE6 100%);
+            transition: width 320ms cubic-bezier(.2, .9, .2, 1), opacity 220ms ease;
+            opacity: 0.95;
+        }
+
+        /* Hover/focus state */
+        nav ul li:hover,
+        nav ul li:focus-within {
+            transform: scale(1.03);
+        }
+
+        nav ul li:hover a,
+        nav ul li:focus-within a {
+            color: #E8EBFF;
+        }
+
+        nav ul li:hover a::after,
+        nav ul li:focus-within a::after {
+            width: 66%;
+        }
+
+        /* Keyboard focus accessibility */
+        nav ul li a:focus {
+            outline: 3px solid rgba(181, 187, 255, 0.12);
+            outline-offset: 4px;
+        }
+
+        /* Visible active / clicked state (persistent until changed) */
+        nav ul li a.active,
+        nav ul li a:active {
+            color: #F6F8FF;
+            /* don't scale the active link to avoid the 'pop-up' pill look */
+            transform: none;
+        }
+
+        /* Active underline only (no extra background/pill) */
+        nav ul li a.active::after,
+        nav ul li a:active::after {
+            width: 88%;
+            height: 3px;
+            bottom: -6px;
+            background: linear-gradient(90deg, #6E8BFF 0%, #F6CFE6 100%);
+            box-shadow: none;
+        }
+
+        /* Respect reduced motion: disable width transitions and scaling */
+        @media (prefers-reduced-motion: reduce) {
+
+            nav ul li,
+            nav ul li a,
+            nav ul li a::after {
+                transition: none !important;
+            }
+
+            nav ul li a.active::after,
+            nav ul li a:active::after {
+                width: 66%;
+            }
+
+            nav ul li:hover,
+            nav ul li:focus-within {
+                transform: none;
+            }
+        }
+
+        /* navGradient removed â€” navbar now uses pageBgShift so nav and body animate together */
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            nav {
+                animation: none !important;
+                background-position: 50% 50%;
+            }
+
+            .namestyle,
+            .jobname {
+                animation: none !important;
+            }
+
+            body {
+                animation: none !important;
+                background-position: 50% 50% !important;
+            }
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* New hover style inspired by the provided short: centered underline that grows + subtle lift */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            padding: 6px 8px;
+            color: #ffffff;
+            transition: color 220ms ease, transform 220ms cubic-bezier(.2, .9, .2, 1);
+            will-change: transform;
+        }
+
+        /* underline grows from center using transform scaleX */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -6px;
+            width: 60%;
+            height: 3px;
+            transform: translateX(-50%) scaleX(0);
+            transform-origin: center;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #7EEBD6 0%, #A9B7FF 100%);
+            transition: transform 260ms cubic-bezier(.2, .9, .2, 1), opacity 200ms ease;
+            opacity: 0.95;
+        }
+
+        /* small left dot accent that fades in */
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: -14px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.6);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(180deg, #9FF1E8, #4EA6FF);
+            opacity: 0;
+            transition: opacity 180ms ease, transform 180ms ease;
+        }
+
+        /* hover and focus show underline and gentle lift */
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #DFFCF6;
+            transform: translateY(-4px);
+            text-decoration: none;
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .nav-link:hover::before,
+        .nav-link:focus::before {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+
+        /* Keep clear focus outline for keyboard users */
+        .nav-link:focus {
+            outline: 3px solid rgba(126, 235, 214, 0.12);
+            outline-offset: 4px;
+        }
+
+        /* Simple, consistent hover for all nav links */
+        .nav-link {
+            position: relative;
+            padding: 6px 8px;
+            border-radius: 6px;
+            transition: color 180ms ease, background 180ms ease, transform 180ms cubic-bezier(.2, .9, .2, 1);
+            color: #ffffff;
+            display: inline-block;
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            color: #7EEBD6;
+            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+
+        .nav-link:focus {
+            outline: 3px solid rgba(126, 235, 214, 0.12);
+            outline-offset: 3px;
+        }
+
+        /* Override the more decorative marker/underline for the simple style */
+        .nav-link::before,
+        .nav-link::after {
+            display: none !important;
+        }
+
+        nav ul li a:hover {
+            color: rgb(113, 113, 192);
+            font-size: 1.01rem;
+        }
+
+        /* Side color accent and hover preview */
+        /* Use ::before as a circular cyan marker that scales in vertically centered */
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            left: -18px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.001);
+            transform-origin: center;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #9FF1E8 0%, #6EE6D6 25%, #4EA6FF 100%);
+            box-shadow: 0 6px 14px rgba(78, 166, 255, 0.14), 0 0 0 0 rgba(78, 166, 255, 0.08) inset;
+            opacity: 0;
+            transition: transform 240ms cubic-bezier(.2, .9, .2, 1), opacity 200ms ease, box-shadow 260ms ease;
+        }
+
+        /* visible while hovering and for a short time after (JS toggles .hovered) */
+        nav ul li a.hovered::before,
+        nav ul li a:focus::before,
+        nav ul li a:hover::before {
+            transform: translateY(-50%) scale(1);
+            opacity: 1;
+            box-shadow: 0 10px 26px rgba(78, 166, 255, 0.18), 0 0 0 6px rgba(78, 166, 255, 0.06) inset;
+            /* single soft pulse on show */
+            animation: pulseRing 700ms ease-out 1;
+        }
+
+        /* nav-preview removed (floating preview disabled) */
+
+        /* Pulse animation for the circular marker */
+        @keyframes pulseRing {
+            0% {
+                box-shadow: 0 8px 20px rgba(78, 166, 255, 0.18), 0 0 0 0 rgba(78, 166, 255, 0.06) inset;
+            }
+
+            70% {
+                box-shadow: 0 20px 40px rgba(78, 166, 255, 0.12), 0 0 0 10px rgba(78, 166, 255, 0.06) inset;
+            }
+
+            100% {
+                box-shadow: 0 10px 26px rgba(78, 166, 255, 0.18), 0 0 0 6px rgba(78, 166, 255, 0.06) inset;
+            }
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            nav ul li a::before {
+                transition: none !important;
+            }
+
+            /* nav-preview removed */
+        }
+
+    .left {
+            font-size: 1.7rem;
+            font-weight: 800;
+            text-decoration: none;
+            /* allow logo image inline with the title */
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 2px 4px;
+            letter-spacing: 0.2px;
+            background: linear-gradient(90deg, var(--accent-1) 5%, var(--accent-2) 50%, var(--accent-3) 95%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 8s linear infinite;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+        }
+
+        /* make CTA pills stand out over video */
+        .download-resume,
+        .contact-cta {
+            backdrop-filter: blur(6px) saturate(120%);
+            -webkit-backdrop-filter: blur(6px) saturate(120%);
+            background: linear-gradient(90deg, var(--cta-start) 0%, var(--cta-end) 100%);
+            color: #041025;
+            box-shadow: 0 8px 26px rgba(9,12,20,0.45);
+        }
+
+        .contact-cta {
+            background: var(--glass-bg);
+            color: #ffffff;
+        }
+
+        /* Small logo next to the site title */
+        .site-logo {
+            width: 36px;
+            height: 36px;
+            display: inline-block;
+            object-fit: cover;
+            border-radius: 8px;
+            flex: 0 0 36px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .left {
+                animation: none;
+                -webkit-text-fill-color: #ffffff;
+                color: #ffffff;
+                background-position: 50% 50%;
+            }
+        }
+
+        .firstsection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* increase top/bottom spacing for more breathing room */
+            margin: 56px 36px 28px 36px;
+            gap: 24px;
+            /* slightly reduce min-height so content doesn't feel 'stuck' to the viewport edges */
+            min-height: min(560px, calc(100vh - 160px));
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+
+        /* nudge the hero slightly up on medium and wide screens for better vertical balance */
+        @media (min-width: 900px) {
+            .firstsection {
+                /* keep a small upward nudge but reduce it so the header has room */
+                transform: translateY(-3vh);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .firstsection {
+                transform: translateY(-5vh);
+            }
+        }
+
+        /* slight horizontal nudges: move text a bit right and photo a bit left for balance */
+        .leftsection {
+            position: relative;
+            left: 2.5%;
+            transition: left .28s ease
+        }
+
+        .orb {
+            transform: translateX(-3%);
+            transition: transform .28s ease
+        }
+
+        @media (min-width:1200px) {
+            .leftsection {
+                left: 3.5%
+            }
+
+            .orb {
+                transform: translateX(-5%)
+            }
+        }
+
+        /* reset on small screens to avoid layout issues */
+        @media (max-width:820px) {
+            .leftsection {
+                left: 0
+            }
+
+            .orb {
+                transform: none
+            }
+        }
+
+        /* Home page blob visual */
+        .home-grid {
+            display: flex;
+            gap: 28px;
+            align-items: center
+        }
+
+        .home-left {
+            flex: 1 1 52%
+        }
+
+        /* right area: let the image sit to the far right with some padding */
+        .home-image {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-left: 12px
+        }
+
+        /* blob-shaped visual: use asymmetric border-radius to create a smooth blob, responsive with clamp() */
+        .orb {
+            width: clamp(300px, 38vw, 520px);
+            height: clamp(260px, 34vw, 480px);
+            border-radius: 48% 52% 60% 40% / 55% 45% 55% 45%;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            box-shadow: 0 28px 78px rgba(2, 6, 23, 0.55);
+            transform: none;
+            max-width: 92vw
+        }
+
+        /* scale image slightly larger than the blob to avoid visual gaps and move focus to the right */
+        .orb img {
+            width: 105%;
+            height: 105%;
+            object-fit: cover;
+            object-position: 60% 50%;
+            display: block;
+            transform-origin: center
+        }
+
+        .orb::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+            opacity: 0.9;
+            background-image: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.06), transparent 18%), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 18px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0 1px, transparent 1px 18px);
+            transform: scale(1);
+            transition: transform .6s ease
+        }
+
+        .orb .grid-rot {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: conic-gradient(from 0deg at 50% 50%, rgba(255, 255, 255, 0.02), transparent 30%);
+            mix-blend-mode: overlay;
+            opacity: 0.6;
+            animation: rotateGrid 12s linear infinite
+        }
+
+        @keyframes rotateGrid {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .orb:hover::before {
+            transform: scale(1.04)
+        }
+
+        @media (max-width:820px) {
+            .home-image {
+                order: -1;
+                justify-content: center;
+                padding-left: 0
+            }
+
+            .orb {
+                width: clamp(220px, 60vw, 320px);
+                height: clamp(200px, 60vw, 300px);
+                transform: none
+            }
+
+            .orb img {
+                width: 100%;
+                height: 100%;
+                object-position: 50% 50%
+            }
+        }
+
+        .firstsection>div {
+            width: 48%;
+        }
+
+        .site-content {
+            position: relative;
+            z-index: 1;
+            /* content stacks naturally; video removed */
+        }
+
+        .leftsection {
+            font-size: 2rem;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        .leftsection h1 {
+            /* slightly smaller so job line can be the stronger visual */
+            font-size: 2.0rem;
+            line-height: 1.08;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .jobstyle {
+            /* job line: larger and more prominent so it reads easily */
+            color: #ffffff;
+            font-size: 1.8rem;
+            /* increased for visibility */
+            line-height: 1.4;
+            font-weight: 600;
+            margin-top: 8px;
+            display: inline-block;
+            letter-spacing: 0.2px;
+        }
+
+        /* jobname: only the job title / role gets the animated gradient */
+        .jobname {
+            /* lighter pastel gradient for role tuned to the video */
+            background: linear-gradient(90deg, var(--accent-1) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
+            background-size: 240% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            display: inline-block;
+            animation: gradientShift 10s linear infinite;
+            transition: transform 260ms ease, opacity 260ms ease;
+        }
+
+        .rightsection {
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rightsection img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Roles list placed to the left of the illustration */
+        .rightcontent {
+            display: flex;
+            align-items: center;
+            /* move visual to the right side of the hero */
+            justify-content: flex-end;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .roles {
+            position: relative;
+            width: 160px;
+            min-width: 120px;
+            height: 46px;
+            /* reserve space for a single role */
+        }
+
+        .role {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: color 320ms ease, transform 320ms ease, font-size 320ms ease, opacity 320ms ease;
+            opacity: 0;
+            transform: translateY(6px);
+            white-space: nowrap;
+        }
+
+        .role.active {
+            opacity: 1;
+            color: #B5BBFF;
+            /* match the pastel palette used elsewhere */
+            font-size: 1.25rem;
+            transform: translateY(0);
+        }
+
+        /* Keep roles tidy on small screens: stack above image */
+        @media (max-width: 720px) {
+            .rightcontent {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .roles {
+                min-width: auto;
+                align-items: center;
+            }
+
+            .role {
+                white-space: normal;
+                text-align: center;
+            }
+        }
+
+        .namestyle {
+            /* Fallback color for very old browsers */
+            color: var(--accent-1);
+            /* softer pastel gradient for the name tuned to background */
+            background: linear-gradient(90deg, var(--accent-1) 5%, var(--accent-2) 50%, var(--accent-3) 95%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            /* lighter shadow for a cleaner look */
+            letter-spacing: 0.12px;
+            display: inline-block;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+            animation: gradientShift 10s linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+            50% { background-position: 100% 50%; filter: hue-rotate(6deg); }
+            100% { background-position: 0% 50%; filter: hue-rotate(0deg); }
+        }
+
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+
+            .namestyle,
+            .jobname {
+                animation: none !important;
+                background-position: 50% 50% !important;
+            }
+        }
+
+        /* Responsive: allow wrapping and stack sections on small screens */
+        @media (max-width: 720px) {
+            .firstsection {
+                flex-direction: column;
+                margin: 30px 0;
+                gap: 16px;
+            }
+
+            .firstsection>div {
+                width: 100%;
+            }
+
+            .namestyle {
+                white-space: normal;
+            }
+        }
+
+        /* Scroll reveal */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 420ms ease, transform 420ms ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* View controls (fixed) */
+        .view-controls {
+            position: fixed;
+            right: 18px;
+            top: 92px;
+            background: rgba(10, 12, 22, 0.6);
+            padding: 8px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 1200;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+        }
+
+        .view-controls button {
+            background: transparent;
+            color: white;
+            border: 0;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 180ms ease, transform 160ms ease;
+        }
+
+        .view-controls button:hover,
+        .view-controls button.active {
+            background: rgba(126, 235, 214, 0.08);
+            transform: translateY(-3px);
+        }
+
+        /* Download resume button: compact, modern pill (best-practice for a subtle CTA) */
+        .download-resume {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 12px;
+            padding: 6px 12px;
+            background: linear-gradient(90deg, #7EEBD6 0%, #A9B7FF 100%);
+            color: #041025;
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1;
+            border-radius: 999px;
+            /* pill */
+            text-decoration: none;
+            box-shadow: 0 6px 18px rgba(10, 14, 30, 0.35);
+            transition: transform 180ms ease, box-shadow 180ms ease, opacity 160ms ease;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .download-resume svg {
+            width: 16px;
+            height: 16px;
+            display: block;
+            flex: 0 0 16px;
+            fill: currentColor;
+            opacity: 0.95;
+        }
+
+        .download-resume:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 26px rgba(10, 14, 30, 0.38);
+        }
+
+        .download-resume:focus {
+            outline: 3px solid rgba(126, 235, 214, 0.12);
+            outline-offset: 4px;
+        }
+
+        /* Contact CTA next to resume (matching pill shape) */
+        .contact-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-left: 8px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-radius: 999px;
+            text-decoration: none;
+            transition: transform 160ms ease, background 160ms ease;
+        }
+
+        .contact-cta svg {
+            width: 14px;
+            height: 14px;
+            flex: 0 0 14px;
+            opacity: 0.95
+        }
+
+        .contact-cta:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.08)
+        }
+
+        /* Mode selector */
+        .mode-select {
+            margin-left: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: white;
+            border: 0;
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        /* Certificates grid styles */
+        #certifications {
+            padding: 0 60px 32px 60px;
+        }
+
+        .cert-grid {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+
+        .cert-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 14px;
+            flex: 1 1 280px;
+            min-width: 220px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+            transition: transform 220ms cubic-bezier(.2, .9, .2, 1), box-shadow 220ms ease;
+        }
+
+        .cert-card h4 {
+            margin-bottom: 6px;
+            color: #E8EBFF;
+            font-size: 1.05rem;
+        }
+
+        .cert-card p {
+            margin: 0;
+            color: rgba(235, 235, 255, 0.85);
+            font-size: 0.95rem;
+        }
+
+        .cert-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #7EEBD6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Mode: snap - make each section full viewport and enable scroll-snap */
+        body.mode-snap main {
+            scroll-snap-type: y mandatory;
+        }
+
+        body.mode-snap main>section {
+            min-height: calc(100vh - 72px);
+            scroll-snap-align: start;
+            padding-top: 24px;
+        }
+
+        /* Mode: swap - fix left profile and show right content area */
+        body.mode-swap .firstsection {
+            position: fixed;
+            left: 18px;
+            top: 92px;
+            width: 36%;
+            max-width: 420px;
+            margin: 0;
+            z-index: 1100;
+        }
+
+        /* Responsive helpers (global): ensure images and media never overflow */
+        img,
+        picture,
+        svg,
+        video,
+        iframe {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Keep nav items on a single line on larger viewports; allow wrapping only on small screens.
+              Avoid showing an inline scrollbar by hiding overflow and tightening spacing slightly. */
+        nav ul {
+            flex-wrap: nowrap;
+            gap: 6px;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+        }
+
+        .container {
+            padding-left: clamp(16px, 4vw, 48px);
+            padding-right: clamp(16px, 4vw, 48px);
+            box-sizing: border-box;
+        }
+
+        @media (max-width:700px) {
+                nav {
+                    padding: 10px 14px;
+                }
+
+                    /* show mobile-only Connect item inside nav list */
+                    .connect-nav { display: list-item; }
+
+                nav ul {
+                    flex-wrap: wrap;
+                }
+
+                .left {
+                    font-size: clamp(1.2rem, 4vw, 1.6rem);
+                }
+
+                .nav-link {
+                    padding: 6px 6px;
+                    font-size: 0.95rem;
+                }
+
+                .firstsection {
+                    min-height: auto;
+                    margin: 18px 12px;
+                }
+
+                .container {
+                    margin: 12px auto;
+                    padding: 12px;
+                }
+
+                /* when the nav is open on small screens allow scrolling with visible scrollbar */
+                nav.open ul {
+                    max-height: calc(100vh - 120px);
+                    overflow-y: auto;
+                    -webkit-overflow-scrolling: touch;
+                    padding-right: 12px; /* leave space for scrollbar */
+                }
+
+                /* show a visible scrollbar for the mobile nav only (override global hides) */
+                nav.open ul::-webkit-scrollbar { width: 8px !important; }
+                nav.open ul::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 8px; }
+                nav.open ul::-webkit-scrollbar-track { background: transparent; }
+            }
+
+        /* Slightly tighten spacing between nav items to avoid overflow on narrow desktop widths */
+        nav ul li {
+            margin: 0 6px;
+        }
+
+        /* mobile nav removed per request */
+
+        /* Hide scrollbar visuals (user requested no visible scrollbar). This keeps scroll behavior but removes the visible track. */
+        /* WebKit */
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        nav ul::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        /* Firefox */
+        html {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        /* Fallback for other elements */
+        .orb,
+        .container,
+        main {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body.mode-swap main {
+            padding-left: 42%;
+        }
+
+        #swap-right {
+            min-height: calc(100vh - 92px);
+            padding: 32px 48px;
+            background: transparent;
+        }
+        /* AI assistant removed */
+    </style>
+    <link rel="stylesheet" href="assets/css/mobile-nav.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <style>
+        /* small final polish: smooth scroll and visible focus outlines */
+        html{scroll-behavior:smooth}
+        :focus{outline:none}
+        a:focus-visible,button:focus-visible,.nav-link:focus-visible{outline:3px solid rgba(126,235,214,0.18);outline-offset:4px}
+    /* background video (behind main content). Place your MP4 at project root or update the src below. */
+    #bg-video{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.18;object-fit:cover;background:transparent}
+        /* Mobile-only resume styles (hidden on larger screens) */
+        .mobile-resume{display:none}
+        @media (max-width:720px){
+            .mobile-resume{
+                display:block;
+                padding:12px;
+                margin:12px 12px 28px 12px;
+                border-radius:14px;
+                background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+                box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+                -webkit-font-smoothing:antialiased;
+                color: #e9f6f0;
+                border-left: 4px solid rgba(126,235,214,0.12);
+            }
+            /* make resume area scrollable on small devices to avoid clipping */
+            .mobile-resume{
+                max-height: calc(100vh - 92px);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-right: 8px; /* allow space for scrollbar */
+            }
+
+            /* Card wrapper inside the section for improved layout */
+            .mobile-resume .card{
+                background: linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.06));
+                padding:14px;
+                border-radius:10px;
+            }
+
+            .mobile-resume .name{font-size:clamp(18px,5.6vw,22px);font-weight:700;margin:0 0 6px 0;color:#ffffff}
+            .mobile-resume .contact-line{font-size:clamp(12px,3.6vw,13px);opacity:0.92;margin:0 0 12px 0;color:#d8f7ee}
+
+            /* Contact row for compact mobile resume: icon + label */
+            .mobile-resume .resume-contact-icons{display:flex;gap:8px;align-items:center;margin:6px 0 12px 0;flex-wrap:wrap}
+            .mobile-resume .resume-contact-icons a{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);color:inherit;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,0.35);min-height:40px}
+            .mobile-resume .resume-contact-icons a:hover{transform:translateY(-3px);background:rgba(255,255,255,0.06)}
+            .mobile-resume .resume-contact-icons svg{width:18px;height:18px;display:block;flex:0 0 18px}
+            .mobile-resume .resume-contact-icons .contact-label{font-size:13px;color:#e6f8f1;line-height:1.1}
+            /* allow long labels to truncate nicely if space is tight */
+            .mobile-resume .resume-contact-icons .contact-label{max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline-block}
+
+            .mobile-resume .section{opacity:0;transform:translateY(14px);transition:opacity .52s ease,transform .52s ease;will-change:transform,opacity;margin-bottom:12px}
+            .mobile-resume .section.visible{opacity:1;transform:translateY(0)}
+
+            .mobile-resume h3{font-size:clamp(15px,4.2vw,16px);margin:0 0 6px 0;color:#bfeee0}
+            .mobile-resume p,.mobile-resume li{font-size:clamp(13px,3.8vw,14px);line-height:1.45;margin:0 0 8px 0;color:#e6f8f1}
+            .mobile-resume ul{margin:6px 0 10px 18px;padding:0}
+            .mobile-resume .muted{opacity:0.78;font-size:clamp(12px,3.4vw,13px)}
+
+            /* subtle divider between major blocks */
+            .mobile-resume .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent);margin:10px 0}
+
+            /* visible scrollbar for the resume card on mobile for discoverability */
+            .mobile-resume::-webkit-scrollbar{width:8px}
+            .mobile-resume::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:8px}
+        }
+    </style>
+</head>
+
+<body>
+    
+    <video id="bg-video" aria-hidden="true" muted loop playsinline preload="auto">
+        <source src="3141210-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        <source src="1006817_Confetti_Background_1920x1080.mp4" type="video/mp4">
+        
+    </video>
+    
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="site-content">
+        <header>
+            <nav>
+                <a href="Index.html" class="left">Arbaz's Portfolio</a>
+                <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false"
+                    aria-controls="main-nav">
+                    <span class="hamburger" aria-hidden="true"></span>
+                    <span class="menu-label" aria-hidden="true">MENU</span>
+                </button>
+                <div class="right">
+                    <ul id="main-nav" aria-hidden="true">
+                        <li><a href="Index.html" class="nav-link" aria-current="page">Home</a></li>
+                        <li><a href="about.html" class="nav-link">About</a></li>
+                        <li><a href="skills.html" class="nav-link">Skills</a></li>
+                        <li><a href="education.html" class="nav-link">Education</a></li>
+                        <li><a href="experience.html" class="nav-link">Experience</a></li>
+                        <li><a href="certifications.html" class="nav-link">Certifications</a></li>
+                        <li><a href="projects.html" class="nav-link">Projects</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact me</a></li>
+                    </ul>
+                    
+                    <div class="connect-icons" aria-hidden="false">
+                        <div class="socials">
+                            <a href="tel:+919570952025" aria-label="Call +91 95709 52025" title="Call" rel="nofollow">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.12 12.12 0 0 0 .7 3.12 2 2 0 0 1-.45 2.11L8.91 10.91a16 16 0 0 0 6 6l1.94-1.94a2 2 0 0 1 2.11-.45 12.12 12.12 0 0 0 3.12.7A2 2 0 0 1 22 16.92z" />
+                                </svg>
+                            </a>
+
+                            <a href="mailto:mdarbazhasan1@gmail.com" aria-label="Email mdarbazhasan1@gmail.com"
+                                title="Email">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                                    focusable="false">
+                                    <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                            </a>
+
+                            <a href="https://github.com/mdarbazhasan" target="_blank" rel="noopener noreferrer"
+                                aria-label="Open GitHub profile" title="GitHub">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.23-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.42-2.7 5.4-5.27 5.68.42.36.8 1.08.8 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12 24 5.73 18.27.5 12 .5z" />
+                                </svg>
+                            </a>
+
+                            <a href="https://linkedin.com/in/mdarbazhasan" target="_blank" rel="noopener noreferrer"
+                                aria-label="Open LinkedIn profile" title="LinkedIn">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M4.98 3.5C3.88 3.5 3 4.38 3 5.48s.88 1.98 1.98 1.98S7 6.58 7 5.48 6.08 3.5 4.98 3.5zM3.5 8.98H6.5V20H3.5zM9.5 8.98h2.8v1.5h.04c.39-.74 1.35-1.52 2.78-1.52 2.97 0 3.52 1.95 3.52 4.49V20h-3V14.3c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V20h-3V8.98z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    <main id="main-content" role="main">
+            <section id="home" class="firstsection">
+                <div class="leftsection">
+                    <h1>Hi, My name is <span class="namestyle">Md Arbaz Hasan.</span></h1>
+                    <p class="jobstyle">and I am a passionate <span class="jobname" id="job-typed"></span></p>
+                    <div class="hero-controls" style="margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                        <a class="download-resume" href="Download Resume.pdf" download title="Download Resume" aria-label="Download resume">
+                            
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                                <path d="M12 3v10m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+                            </svg>
+                            <span>Resume</span>
+                        </a>
+                        
+                        <a class="contact-cta" href="contact.html" title="Contact me">
+                            
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                focusable="false">
+                                <path
+                                    d="M3 7.5v9A2.5 2.5 0 0 0 5.5 19h13A2.5 2.5 0 0 0 21 16.5v-9A2.5 2.5 0 0 0 18.5 5h-13A2.5 2.5 0 0 0 3 7.5z"
+                                    stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M21 7.5l-9 6-9-6" stroke="currentColor" stroke-width="1.2" fill="none"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span>Contact</span>
+                        </a>
+                        
+                        <div class="hero-socials socials" role="group" aria-label="Contact and profiles">
+                            <a href="tel:+919570952025" aria-label="Call +91 95709 52025" title="Call" rel="nofollow">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.12 12.12 0 0 0 .7 3.12 2 2 0 0 1-.45 2.11L8.91 10.91a16 16 0 0 0 6 6l1.94-1.94a2 2 0 0 1 2.11-.45 12.12 12.12 0 0 0 3.12.7A2 2 0 0 1 22 16.92z" />
+                                </svg>
+                            </a>
+                            <a href="mailto:mdarbazhasan1@gmail.com" aria-label="Email mdarbazhasan1@gmail.com"
+                                title="Email">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                                    stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+                                    focusable="false">
+                                    <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+                                    <polyline points="22,6 12,13 2,6" />
+                                </svg>
+                            </a>
+                            <a href="https://github.com/mdarbazhasan" target="_blank" rel="noopener noreferrer"
+                                aria-label="Open GitHub profile" title="GitHub">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.23-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.42-2.7 5.4-5.27 5.68.42.36.8 1.08.8 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12 24 5.73 18.27.5 12 .5z" />
+                                </svg>
+                            </a>
+                            <a href="https://linkedin.com/in/mdarbazhasan" target="_blank" rel="noopener noreferrer"
+                                aria-label="Open LinkedIn profile" title="LinkedIn">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"
+                                    focusable="false">
+                                    <path
+                                        d="M4.98 3.5C3.88 3.5 3 4.38 3 5.48s.88 1.98 1.98 1.98S7 6.58 7 5.48 6.08 3.5 4.98 3.5zM3.5 8.98H6.5V20H3.5zM9.5 8.98h2.8v1.5h.04c.39-.74 1.35-1.52 2.78-1.52 2.97 0 3.52 1.95 3.52 4.49V20h-3V14.3c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V20h-3V8.98z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="rightsection">
+                    <div class="rightcontent">
+                        <div class="home-image" aria-hidden="false">
+                            <div class="orb" role="img" aria-label="Decorative illustration">
+                                <img src="Image.png" alt="Illustration" loading="lazy">
+                                <span class="grid-rot" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section id="mobile-resume" class="mobile-resume" aria-label="Mobile resume">
+                <div class="card">
+                    <h2 class="name">Md Arbaz Hasan</h2>
+                    <div class="contact-line">
+                        <div class="resume-contact-icons" aria-label="Contact links">
+                            <a href="mailto:mdarbazhasan1@gmail.com" aria-label="Email mdarbazhasan1@gmail.com" title="Email">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2" ry="2"></rect><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <span class="contact-label">mdarbazhasan1@gmail.com</span>
+                            </a>
+                            <a href="tel:+919570952025" aria-label="Call +91 95709 52025" title="Call" rel="nofollow">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.09 4.18 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.72 12.12 12.12 0 0 0 .7 3.12 2 2 0 0 1-.45 2.11L8.91 10.91a16 16 0 0 0 6 6l1.94-1.94a2 2 0 0 1 2.11-.45 12.12 12.12 0 0 0 3.12.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <span class="contact-label">+91 95709 52025</span>
+                            </a>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Tughlakabad+Village+Delhi" target="_blank" rel="noopener noreferrer" aria-label="Open location in Google Maps" title="Location">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <span class="contact-label">Tughlakabad Village, Delhi</span>
+                            </a>
+                            <a href="https://linkedin.com/in/mdarbazhasan" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile" title="LinkedIn">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M4.98 3.5C3.88 3.5 3 4.38 3 5.48s.88 1.98 1.98 1.98S7 6.58 7 5.48 6.08 3.5 4.98 3.5zM3.5 8.98H6.5V20H3.5zM9.5 8.98h2.8v1.5h.04c.39-.74 1.35-1.52 2.78-1.52 2.97 0 3.52 1.95 3.52 4.49V20h-3V14.3c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V20h-3V8.98z"></path></svg>
+                                <span class="contact-label">LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/mdarbazhasan" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile" title="GitHub">
+                                
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.23-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.42-2.7 5.4-5.27 5.68.42.36.8 1.08.8 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12 24 5.73 18.27.5 12 .5z"></path></svg>
+                                <span class="contact-label">GitHub</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="divider" aria-hidden="true"></div>
+
+                    <div class="section" id="res-summary" role="region" aria-labelledby="res-summary-h">
+                        <h3 id="res-summary-h">PROFESSIONAL SUMMARY</h3>
+                        <p>Motivated and detail-oriented individual skilled in data entry, computer operations, and office management. Capable of handling administrative, back-office, and accounting tasks efficiently using MS Office, Excel, and Tally. Dedicated to accuracy, teamwork, and continuous skill improvement.</p>
+                    </div>
+
+                    <div class="section" id="res-skills" role="region" aria-labelledby="res-skills-h">
+                        <h3 id="res-skills-h">SKILLS</h3>
+                        <ul>
+                            <li>Data Entry & Database Management: MS Excel, Google Sheets, MS Access</li>
+                            <li>Accounting: Tally Prime, Tally ERP 9, MS Excel</li>
+                            <li>Document Handling: MS Word, Google Docs</li>
+                            <li>Presentation: MS PowerPoint, Google slides, Canva</li>
+                            <li>Data Analysis: Excel (VLOOKUP, Pivot Table, Lookup), Google Sheets, Excel VBA/Macros</li>
+                            <li>Communication: MS Outlook, Google Meet, Email Writing</li>
+                            <li>Cloud Work: Google Drive, Google Docs, Sheets, OneDrive</li>
+                            <li>Typing Speed: 40+ WPM with high accuracy and efficiency</li>
+                            <li>CRM Tools: Lead Squared (Customer tracking & communication)</li>
+                        </ul>
+                    </div>
+
+                    <div class="section" id="res-experience" role="region" aria-labelledby="res-experience-h">
+                        <h3 id="res-experience-h">Experience</h3>
+                        <p class="muted">Marketing Intern &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aug 2024 â€“ Nov 2024</p>
+                        <p><strong>Nirog Street</strong></p>
+                        <ul>
+                            <li>Called patients to schedule appointments and provide service information.</li>
+                            <li>Maintained patient records and database updates.</li>
+                            <li>Supported the marketing team in outreach and engagement activities.</li>
+                        </ul>
+                    </div>
+
+                    <div class="section" id="res-education" role="region" aria-labelledby="res-education-h">
+                        <h3 id="res-education-h">Education</h3>
+                        <p><strong>B.A. (Hons.) in English â€“ 3rd Year</strong><br>University of Delhi</p>
+                        <ul>
+                            <li>Expected Graduation Year: 2027</li>
+                            <li>2nd Year CGPA: 7.68 CGPA</li>
+                            <li>Skill Enhancement subject â€“ Basic IT Tools, Communication in professional life</li>
+                        </ul>
+
+                        <p style="margin-top:8px"><strong>Intermediate of Science (12th)</strong><br>B.K.S.K.S Inter College, Garhpura</p>
+                        <ul>
+                            <li>Stream: PCMB (Physics, Chemistry, Mathematics, Biology)</li>
+                            <li>Year of Completion: 2023</li>
+                            <li>Percentage: 71.8%</li>
+                        </ul>
+                    </div>
+
+                    <div class="section" id="res-certifications" role="region" aria-labelledby="res-certifications-h">
+                        <h3 id="res-certifications-h">Certifications</h3>
+                        <ul>
+                            <li>Advanced Diploma in Computer Application â€“ Spread My Career</li>
+                            <li>Excel Macros & VBA for Beginners, Introduction to MS Excel, LOOKUP Function in Excel, Google Sheets â€“ Simplilearn</li>
+                            <li>ChatGPT in Excel, MS Office, Tally Prime, Excel â€“ Skill Course</li>
+                            <li>Typing Certificate (42 WPM, 95% Accuracy) â€“ Typing.com</li>
+                        </ul>
+                    </div>
+
+                    <div class="section" id="res-projects" role="region" aria-labelledby="res-projects-h">
+                        <h3 id="res-projects-h">Projects</h3>
+                        <p><strong>Velora Store â€“ Annual Business Report 2024</strong> - view project</p>
+                        <p>Developed an interactive Excel-based analytics dashboard to visualize sales, customer, and regional performance data.</p>
+                        <ul>
+                            <li>Key Insights: Identified low-performing regions, product trends, and revenue peaks during festive seasons.</li>
+                            <li>Tools Used: Microsoft Excel (PivotTables, Charts, Conditional Formatting, Data Cleaning)</li>
+                        </ul>
+                    </div>
+
+                    <div class="section" id="res-languages" role="region" aria-labelledby="res-languages-h">
+                        <h3 id="res-languages-h">Languages</h3>
+                        <p>English (Intermediate) - Currently learning and improving, Hindi (Native)</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script>
+        (function () {
+            // Respect reduced motion preferences
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                var el = document.getElementById('job-typed');
+                if (el) el.textContent = 'Data Entry Operator.';
+                return;
+            }
+
+            if (typeof Typed === 'undefined') {
+                var el = document.getElementById('job-typed');
+                if (el) el.textContent = 'Data Entry Operator.';
+                return;
+            }
+
+            // Clear initial content so the first string is typed rather than shown instantly
+            var typedEl = document.getElementById('job-typed');
+            if (typedEl) typedEl.textContent = '';
+            new Typed('#job-typed', {
+                strings: ['Data Entry Operator.', 'Computer Operator.'],
+                typeSpeed: 50,
+                backSpeed: 45,
+                startDelay: 150,
+                backDelay: 1400,
+                loop: true,
+                showCursor: true,
+                cursorChar: '|',
+                preStringTyped: function (pos) {
+                    // show cursor right before typing a new string
+                    var c = document.querySelector('.typed-cursor');
+                    if (c) c.style.visibility = 'visible';
+                },
+                onStringTyped: function (pos, self) {
+                    // hide cursor immediately after finishing typing the string
+                    var c = document.querySelector('.typed-cursor');
+                    if (c) c.style.visibility = 'hidden';
+                }
+            });
+        })();
+    </script>
+
+
+
+
+<script src="assets/js/mobile-nav.js" defer></script>
+<script>
+    (function () {
+        // Background video handling: autoplay when allowed, otherwise hide for reduced-motion or small screens.
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var isSmallScreen = window.innerWidth < 720;
+        var video = document.getElementById('bg-video');
+        if (!video) return;
+
+        // If user prefers reduced motion or on small screens, hide the video to save battery/data
+        if (prefersReduced || isSmallScreen) {
+            video.style.display = 'none';
+            return;
+        }
+
+        // Ensure styling covers viewport (in case CSS didn't load yet)
+        video.style.position = 'fixed';
+        video.style.inset = '0';
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.objectFit = 'cover';
+        video.style.zIndex = '0';
+        video.style.pointerEvents = 'none';
+
+        // Try to play; on browsers that block autoplay we'll silently hide the video
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+
+        var playPromise = video.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(function () {
+                // autoplay blocked: hide video to avoid showing controls or poster
+                video.style.display = 'none';
+            });
+        }
+
+        // Pause video when tab is hidden to save CPU
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) video.pause(); else video.play().catch(function () { /* ignore */ });
+        });
+    })();
+</script>
+
+
+<script>
+    (function () {
+        if (typeof window === 'undefined') return;
+        if (window.innerWidth > 720) return; // only run on small screens
+
+        function onIntersect(entries, obs) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // once visible, we can unobserve to reduce work
+                    obs.unobserve(entry.target);
+                }
+            });
+        }
+
+        try {
+            // Use the mobile-resume container as the root if it is scrollable. This ensures
+            // IntersectionObserver detects sections entering the visible area when the card
+            // itself scrolls (we made the card scrollable earlier).
+            var resumeRoot = document.getElementById('mobile-resume');
+            var observerRoot = null;
+            if (resumeRoot) {
+                // Reset any restored internal scroll position on page load/refresh so the
+                // resume shows from the top. Some browsers restore scroll into the
+                // internal container after a refresh which can make later sections
+                // appear immediately; forcing scrollTop=0 prevents that.
+                try { resumeRoot.scrollTop = 0; } catch (e) { /* noop */ }
+                // Prefer manual scroll restoration so the browser doesn't try to
+                // restore scroll positions (affects whole document but prevents
+                // internal container restoration on some browsers).
+                try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) { /* noop */ }
+                // Some browsers restore internal scroll asynchronously; schedule a
+                // couple of short delayed resets and a follow-up visibility check.
+                try { setTimeout(function () { try { resumeRoot.scrollTop = 0; } catch (e) {} }, 20); } catch (e) {}
+                try { setTimeout(function () { try { resumeRoot.scrollTop = 0; } catch (e) {} }, 140); } catch (e) {}
+                // Ensure we re-run the visibility check shortly after load/pageshow
+                try { setTimeout(function () { try { if (typeof checkVisibilityAll === 'function') checkVisibilityAll(); } catch (e) {} }, 160); } catch (e) {}
+                // Also handle pageshow (back/forward restore or full refresh) to reset
+                // the resume container and re-run visibility checks.
+                try {
+                    window.addEventListener('pageshow', function () {
+                        try { resumeRoot.scrollTop = 0; } catch (e) {}
+                        try { if (typeof checkVisibilityAll === 'function') checkVisibilityAll(); } catch (e) {}
+                    });
+                } catch (e) {}
+            }
+            if (resumeRoot && resumeRoot.scrollHeight > resumeRoot.clientHeight) {
+                observerRoot = resumeRoot;
+            }
+
+            var observer = new IntersectionObserver(onIntersect, { root: observerRoot, rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
+            var items = Array.prototype.slice.call(document.querySelectorAll('#mobile-resume .section'));
+            if (items.length === 0) {
+                // nothing to observe â€” reveal all to avoid hidden content
+                return;
+            }
+
+            // Fallback / robustness: some devices or browsers may not reliably
+            // fire IntersectionObserver for elements inside an internal scroll
+            // container. Attach a scroll-based checker that will reveal items as
+            // they become visible inside the chosen root (resumeRoot) or the
+            // viewport. This runs immediately and then on scroll until all
+            // sections are visible.
+            var scrollTick = false;
+            function checkVisibilityAll() {
+                // iterate over a copy to allow removal while iterating
+                for (var i = items.length - 1; i >= 0; i--) {
+                    var el = items[i];
+                    try {
+                        if (isElementVisibleInRoot(el, observerRoot)) {
+                            el.classList.add('visible');
+                            // stop observing with IntersectionObserver if active
+                            try { observer.unobserve(el); } catch (e) { /* noop */ }
+                            // remove from items list
+                            items.splice(i, 1);
+                        }
+                    } catch (e) {
+                        // if measurements fail, skip this element for now
+                    }
+                }
+                // if we've revealed all items, disconnect and remove listeners
+                if (items.length === 0) {
+                    try { observer.disconnect(); } catch (e) { /* noop */ }
+                    // remove scroll listener
+                    try { (observerRoot || window).removeEventListener('scroll', onScroll, { passive: true }); } catch (e) { /* noop */ }
+                }
+            }
+
+            // scroll handler with rAF throttle
+            function onScroll() {
+                if (scrollTick) return;
+                scrollTick = true;
+                requestAnimationFrame(function () { checkVisibilityAll(); scrollTick = false; });
+            }
+
+            // run an immediate pass to reveal any section already in view
+            checkVisibilityAll();
+
+            // attach scroll listener to the resume container (if used) or window
+            try {
+                (observerRoot || window).addEventListener('scroll', onScroll, { passive: true });
+            } catch (e) {
+                // older browsers may not accept the options object
+                try { (observerRoot || window).addEventListener('scroll', onScroll); } catch (e) { /* noop */ }
+            }
+
+            // Helper: check if an element is visible inside the root (either viewport or resumeRoot)
+            function isElementVisibleInRoot(el, rootEl) {
+                var elRect = el.getBoundingClientRect();
+                var rootRect = rootEl ? rootEl.getBoundingClientRect() : { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth };
+                // Consider visible if any part of el intersects root's rect (partial visible)
+                return (elRect.bottom > rootRect.top + 2) && (elRect.top < rootRect.bottom - 2);
+            }
+
+            // Observe items but immediately reveal any that are already inside the visible area
+            items.forEach(function (it) {
+                try {
+                    if (isElementVisibleInRoot(it, observerRoot)) {
+                        it.classList.add('visible');
+                        // Don't observe already-visible items
+                        return;
+                    }
+                } catch (e) {
+                    // ignore measurement errors and fall back to observing
+                }
+                observer.observe(it);
+            });
+
+            // Extra fallback: if the last section (Languages) is present but remained hidden
+            // (for example on some devices where measurement differs), reveal it so users
+            // can always see the Languages entry without needing to fiddle with scrolling.
+            try {
+                var last = items[items.length - 1];
+                if (last && !last.classList.contains('visible')) {
+                    // give the observer a short moment to trigger normally, then force-show
+                    setTimeout(function () { last.classList.add('visible'); }, 180);
+                }
+            } catch (e) { /* noop */ }
+        } catch (e) {
+            // IntersectionObserver might not be available on very old browsers; fall back to reveal all
+            document.querySelectorAll('#mobile-resume .section').forEach(function (el) { el.classList.add('visible'); });
+        }
+    })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+/* Site-wide responsive helpers
+   This file contains conservative, mobile-/tablet-only overrides and helpers.
+   It is intentionally non-destructive for desktop: all rules are inside max-width media queries.
+*/
+
+/* Tablet: <= 1024px */
+@media (max-width: 1024px) {
+  nav { padding: 10px 20px !important; }
+  nav ul { gap: 10px; }
+  .right { gap: 6px; }
+  .container { max-width: 980px; margin: 18px auto; padding-left: clamp(16px,4vw,36px); padding-right: clamp(16px,4vw,36px); }
+  .firstsection { flex-wrap: wrap; gap: 18px; margin: 28px 12px; }
+  .firstsection > div { width: 100%; }
+  .orb { width: clamp(260px, 38vw, 420px); height: clamp(220px, 34vw, 380px); }
+}
+
+/* Narrow desktop / large tablet: 1025-1366px - small adjustments */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  nav { padding: 12px 28px !important; }
+  .firstsection { margin: 40px 28px; }
+}
+
+/* Small landscape phones and narrow tablets */
+@media (max-width: 820px) {
+  .firstsection { margin: 20px 8px; }
+  .leftsection h1 { font-size: clamp(1.4rem, 3.5vw, 1.9rem); }
+  .jobstyle { font-size: clamp(1rem, 3.6vw, 1.3rem); }
+  /* Make two-column content stack */
+  .about-grid, .contact-grid, .experience-grid { flex-direction: column; }
+  .about-right, .contact-right, .experience-image { order: -1; margin-bottom: 12px; }
+}
+
+/* Mobile phones: <= 700px */
+@media (max-width: 700px) {
+  nav { padding: 10px 14px !important; }
+  .left { font-size: clamp(1.2rem, 4vw, 1.6rem); }
+  .nav-link { padding: 6px 6px; font-size: 0.95rem; }
+  .container { margin: 12px auto; padding: 12px; }
+  /* Keep hero controls on one row but allow horizontal scroll instead of wrapping */
+  .hero-controls { flex-wrap: nowrap !important; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .hero-controls a { flex: 0 0 auto; }
+}
+
+/* Very small phones: <= 420px */
+@media (max-width: 420px) {
+  .download-resume svg, .contact-cta svg { display: none !important; }
+  .download-resume, .contact-cta { width: 42px; justify-content: center; padding: 6px; }
+  .jobstyle { font-size: 0.95rem; }
+  /* Reduce large fixed-width project images/cards to be responsive */
+  .project-card [style*="flex: 0 0"] { flex: 0 0 100% !important; }
+}
+
+/* Skip link (accessibility) - visually hidden but visible on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  border-radius: 6px;
+  z-index: 9999;
+}
+
+/* =======================
+   Additional responsive refinements (final touch)
+   - Mobile-first helpers for common components used across pages
+   - Keeps existing desktop rules untouched (these are progressive overrides)
+   - Targets hero, resume, cards, buttons, and forms
+   ======================= */
+
+/* Global container cap for very large screens */
+@media (min-width:1400px) {
+  .container { max-width: 1240px; margin-left: auto; margin-right: auto; }
+}
+
+/* Hero and header tweaks for small screens */
+@media (max-width: 700px) {
+  /* Stack hero content and reduce spacing */
+  .firstsection { gap: 10px; margin: 12px 8px; }
+  .leftsection h1 { font-size: clamp(1.25rem, 5.2vw, 1.6rem); }
+  .jobstyle { font-size: clamp(0.95rem, 4.4vw, 1.15rem); }
+  .hero-controls { gap: 8px; align-items: center; }
+  /* Make CTA pills easier to tap (full width in narrow view) */
+  .download-resume, .contact-cta { width: 100%; justify-content: center; box-sizing: border-box; }
+  .download-resume span, .contact-cta span { display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Resume card/grid improvements */
+@media (max-width: 920px) {
+  .resume-section { margin: 12px; padding: 14px; }
+  .resume-grid { grid-template-columns: 1fr !important; }
+  .resume-right { padding-left: 0 !important; order: 2; }
+  .resume-left { order: 1; }
+  .section-card { padding: 10px; margin-top: 10px; }
+  .resume-bullets { padding-left: 12px; }
+}
+
+/* Improve reading comfort on small phones */
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .leftsection h1 { font-size: 1.15rem; }
+  .jobstyle { font-size: 0.95rem; }
+  .section-card h3 { font-size: 1rem; }
+  .container { padding-left: 12px; padding-right: 12px; }
+  /* Reduce gap in skill lists to avoid wrapping issues */
+  .skill-list { gap: 6px; }
+}
+
+/* Improve flow for long lists and certificate grids */
+@media (max-width: 820px) {
+  .cert-grid { gap: 12px; }
+  .cert-card { flex: 1 1 100%; }
+}
+
+/* Forms & buttons: full width on mobile for easier tapping */
+@media (max-width: 700px) {
+  button, input[type="submit"], .form-submit, .download-resume { width: 100%; }
+}
+
+/* Accessibility: increase tappable area for small interactive elements */
+@media (max-width: 600px) {
+  .socials a, .hero-socials a { min-width: 44px; min-height: 44px; display:inline-flex; align-items:center; justify-content:center; }
+}
+
+/* Small polish: avoid large backdrops covering content on tiny screens */
+@media (max-width: 520px) {
+  .view-controls { right: 8px; top: 82px; }
+  .orb { display: block; max-width: 86vw; }
+}
+
+

@@ -1,0 +1,14 @@
+:root{--bg:#141827;--accent:#7EEBD6;--muted:rgba(255,255,255,0.85)}
+*{box-sizing:border-box}
+body,html,#root{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(120deg,#141827 0%,#262c42 30%,#333a55 60%)}
+.site-nav{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;color:white}
+.brand{font-weight:800;color:var(--accent);text-decoration:none}
+.nav-list{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+.hero{display:flex;gap:24px;padding:40px}
+.hero-left{flex:1;color:white}
+.hero-right{flex:0 0 420px}
+.orb{width:100%;border-radius:20px;overflow:hidden;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center}
+.orb img{width:100%;height:auto;display:block}
+.download-resume{display:inline-block;padding:8px 12px;background:linear-gradient(90deg,var(--accent),#A9B7FF);color:#041025;border-radius:999px;text-decoration:none;font-weight:700}
+.contact-cta{margin-left:8px;color:white;text-decoration:none;padding:8px 12px;background:rgba(255,255,255,0.04);border-radius:999px}
+.namestyle{background:linear-gradient(90deg,#6FEBD8, #A9B7FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}

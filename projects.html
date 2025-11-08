@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Projects - Md Arbaz Hasan</title>
+    
+    <link rel="icon" href="assets/icons/projects.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#7EEBD6">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* page background video styling (site-wide) */
+    #bg-video{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0.18;object-fit:cover}
+    :root{--bg-dark-1:#0f1724;--bg-dark-2:#253047;--accent-1:#7EEBD6;--accent-2:#A9B7FF;--accent-3:#F6CFE6;--nav-overlay:rgba(6,10,20,0.5)}
+    body{margin:0;font-family:Poppins,system-ui,Segoe UI,Arial;color:#fff;background:linear-gradient(120deg,var(--bg-dark-1) 0%,var(--bg-dark-2) 40%,#2b3450 100%);background-size:300% 300%;animation:pageBgShift 28s ease-in-out infinite;min-height:100vh}
+    nav{display:flex;justify-content:space-between;align-items:center;padding:16px 40px;background:var(--nav-overlay)}
+        .left{
+            font-size:1.7rem;
+            font-weight:800;
+            text-decoration:none;
+            display:inline-block;
+            padding:2px 4px;
+            letter-spacing:0.2px;
+            /* animated pastel gradient like the site name */
+            background: linear-gradient(90deg, var(--accent-1) 5%, var(--accent-2) 50%, var(--accent-3) 95%);
+            background-size: 220% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 10s linear infinite;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+        }
+
+        @keyframes gradientShift { 0% { background-position: 0% 50%; filter: hue-rotate(0deg); } 50% { background-position: 100% 50%; filter: hue-rotate(6deg); } 100% { background-position: 0% 50%; filter: hue-rotate(0deg); } }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .left { animation: none; -webkit-text-fill-color: #ffffff; color: #ffffff; background-position: 50% 50%; }
+        }
+    nav ul{display:flex;gap:14px;align-items:center;list-style:none;margin:0;padding:0}
+        .nav-link{position:relative;display:inline-block;padding:6px 8px;color:#fff;text-decoration:none;transition:color .22s,transform .22s}
+        .nav-link::after{content:"";position:absolute;left:50%;bottom:-6px;width:60%;height:3px;transform:translateX(-50%) scaleX(0);transform-origin:center;border-radius:3px;background:linear-gradient(90deg,var(--accent),#A9B7FF);transition:transform .26s}
+        .nav-link:hover::after,.nav-link:focus::after{transform:translateX(-50%) scaleX(1)}
+    /* social icons */
+    .social-icons{display:inline-flex;gap:10px;align-items:center}
+    .social-icons a{display:inline-block}
+    .social-icons img{width:24px;height:24px;display:block;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+        .container{max-width:980px;margin:36px auto;padding:28px;background:rgba(255,255,255,0.03);border-radius:10px;box-shadow:0 8px 30px rgba(2,6,23,0.5)}
+        .page-content{animation:fadeUp .44s ease both}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    h1{margin:0 0 8px;font-size:1.6rem}
+    /* page header icon */
+    .page-header{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+    .page-icon{width:clamp(48px,8vw,84px);height:clamp(48px,8vw,84px);border-radius:50%;overflow:hidden;display:block;border:4px solid rgba(255,255,255,0.06);box-shadow:0 10px 28px rgba(0,0,0,0.45);background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center}
+    .page-icon svg{width:26px;height:26px;fill:currentColor}
+        ul{color:#e6eefc;line-height:1.6}
+        /* Responsive helpers */
+        img, picture, svg, video, iframe { max-width: 100%; height: auto; display: block; }
+        nav ul { flex-wrap: wrap; gap: 10px; }
+        .container { padding-left: clamp(16px, 4vw, 48px); padding-right: clamp(16px, 4vw, 48px); box-sizing: border-box; }
+        @media (max-width:700px) {
+            nav { padding: 10px 14px; }
+            .left { font-size: clamp(1.2rem, 4vw, 1.6rem); }
+            .nav-link { padding: 6px 6px; font-size: 0.95rem; }
+            .container { margin: 14px auto; padding: 14px; }
+        }
+
+        /* Mobile hamburger menu styles */
+        .nav-toggle{display:none;align-items:center;justify-content:center;border:0;background:transparent;color:inherit}
+        .nav-toggle .hamburger{display:inline-block;width:22px;height:16px;position:relative}
+        .nav-toggle .hamburger::before,.nav-toggle .hamburger::after,.nav-toggle .hamburger span{content:"";position:absolute;left:0;right:0;height:3px;background:#fff;border-radius:3px}
+        .nav-toggle .hamburger::before{top:0}
+        .nav-toggle .hamburger span{top:6.5px}
+        .nav-toggle .hamburger::after{bottom:0}
+
+        /* mobile nav overlay removed per request */
+    </style>
+    <link rel="stylesheet" href="assets/css/mobile-nav.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <style>
+        /* final polish for accessibility */
+        html{scroll-behavior:smooth}
+        :focus{outline:none}
+        a:focus-visible,button:focus-visible,.nav-link:focus-visible{outline:3px solid rgba(126,235,214,0.18);outline-offset:4px}
+    </style>
+</head>
+<body>
+    
+    <video id="bg-video" aria-hidden="true" muted loop playsinline preload="auto">
+        <source src="3141210-uhd_3840_2160_25fps.mp4" type="video/mp4">
+    </video>
+    <nav>
+        <a href="index.html" class="left">Arbaz's Portfolio</a>
+    
+    <a class="skip-link" href="#main-content">Skip to content</a>
+        <button id="navToggle" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="main-nav">
+            <span class="hamburger" aria-hidden="true"></span>
+            <span class="menu-label" aria-hidden="true">MENU</span>
+        </button>
+        <ul id="main-nav" aria-hidden="true">
+            <li><a class="nav-link" href="index.html">Home</a></li>
+            <li><a class="nav-link" href="about.html">About</a></li>
+            <li><a class="nav-link" href="skills.html">Skills</a></li>
+            <li><a class="nav-link" href="education.html">Education</a></li>
+            <li><a class="nav-link" href="experience.html">Experience</a></li>
+            <li><a class="nav-link" href="certifications.html">Certifications</a></li>
+            <li><a class="nav-link" href="projects.html">Projects</a></li>
+            <li><a class="nav-link" href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main id="main-content" class="container page-content" role="main">
+                <div class="page-header">
+                        <span class="page-icon" aria-hidden="true">
+                                
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path d="M10 4H4c-1.1 0-2 .9-2 2v2h20V8c0-1.1-.9-2-2-2h-8l-2-2zM2 12v6c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-6H2zm6 2h10v2H8v-2z"/>
+                                </svg>
+                        </span>
+                        <h1>Projects</h1>
+                </div>
+        <div class="project-card" style="display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap">
+            <div style="flex:0 0 420px;max-width:100%;">
+                
+                <a href="velora Store Data Analysis.png" target="_blank" rel="noopener">
+                    <img src="velora Store Data Analysis.png" alt="Velora Store Dashboard preview" style="width:100%;height:auto;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,0.5);display:block;" loading="lazy">
+                </a>
+            </div>
+            <div style="flex:1 1 360px;min-width:260px;">
+                <h3>Velora Store Annual Business Report 2024</h3>
+                <p>Excel-based business analytics dashboard for Velora Store's 2024 performance review. The dashboard turns raw sales and customer data into interactive visualizations and KPIs to support decision-making.</p>
+                <h4 style="margin-top:10px">Project Objective</h4>
+                <ul>
+                    <li>Analyze annual sales performance to uncover growth trends, product performance, regional variations, customer behavior, revenue and returns.</li>
+                    <li>Interactive features: slicers, dynamic charts, KPI tiles, and segment filters to explore the business from multiple angles.</li>
+                </ul>
+
+                <h4 style="margin-top:8px">Project Files</h4>
+                <ul>
+                    <li><strong>Velora_Store_Data_Analysis.xlsx</strong> â€” Excel dashboard with interactive charts, slicers, and KPIs (attach the .xlsx in the repo or provide a OneDrive link).</li>
+                    <li><strong>velora Store Data Analysis.png</strong> â€” Snapshot preview (displayed on this page).</li>
+                    <li><a href="README.md" target="_blank" rel="noopener">README.md</a> â€” Project overview, objectives and insights documentation (created in repo).</li>
+                </ul>
+
+                <h4 style="margin-top:8px">Key Insights</h4>
+                <ul>
+                    <li>Category A dominated sales in Q2 and Q4.</li>
+                    <li>Region South-West consistently underperformed.</li>
+                    <li>High return rates concentrated in Apparel XL sizes.</li>
+                    <li>Festive months (Octâ€“Dec) drove ~40% of annual revenue.</li>
+                </ul>
+
+                <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+                    <a href="Velora_Store_Data_Analysis.xlsx" download style="padding:8px 12px;background:linear-gradient(90deg,#7EEBD6,#A9B7FF);color:#041025;border-radius:999px;text-decoration:none;font-weight:700">Download .xlsx</a>
+                    <a href="#" title="Open in Excel Online (replace with OneDrive link)" style="padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);color:#fff;text-decoration:none">Open in Excel Online</a>
+                    <a href="velora Store Data Analysis.png" target="_blank" rel="noopener" style="padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.04);color:#fff;text-decoration:none">Open Preview</a>
+                </div>
+
+                <p style="margin-top:12px;color:rgba(235,235,255,0.85)">Author: Md Arbaz Hasan â€”
+                    <span class="social-icons">
+                        <a href="https://github.com/mdarbazhasan" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile" title="GitHub">
+                            
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.82 0c2.23-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.84 1.2 3.1 0 4.42-2.7 5.4-5.27 5.68.42.36.8 1.08.8 2.17 0 1.57-.01 2.83-.01 3.21 0 .31.21.68.8.56C20.71 21.39 24 17.08 24 12 24 5.73 18.27.5 12 .5z"/>
+                            </svg>
+                        </a>
+                        <a href="https://linkedin.com/in/mdarbazhasan" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile" title="LinkedIn">
+                            
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" focusable="false">
+                                <path d="M4.98 3.5C3.88 3.5 3 4.38 3 5.48s.88 1.98 1.98 1.98S7 6.58 7 5.48 6.08 3.5 4.98 3.5zM3.5 8.98H6.5V20H3.5zM9.5 8.98h2.8v1.5h.04c.39-.74 1.35-1.52 2.78-1.52 2.97 0 3.52 1.95 3.52 4.49V20h-3V14.3c0-1.34-.02-3.07-1.87-3.07-1.87 0-2.16 1.46-2.16 2.97V20h-3V8.98z"/>
+                            </svg>
+                        </a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </main>
+    </main>
+    <script src="assets/js/mobile-nav.js" defer></script>
+    <script>
+    (function(){
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var isSmallScreen = window.innerWidth < 720;
+        var video = document.getElementById('bg-video'); if(!video) return;
+        if(prefersReduced || isSmallScreen){ video.style.display='none'; return; }
+        video.muted=true; video.loop=true; video.playsInline=true;
+        video.style.position='fixed'; video.style.inset='0'; video.style.width='100%'; video.style.height='100%'; video.style.objectFit='cover'; video.style.zIndex='0'; video.style.pointerEvents='none';
+        var p = video.play(); if(p !== undefined) p.catch(function(){ video.style.display='none'; });
+        document.addEventListener('visibilitychange', function(){ if(document.hidden) video.pause(); else video.play().catch(function(){}); });
+    })();
+    </script>
+</body>
+</html>
+
